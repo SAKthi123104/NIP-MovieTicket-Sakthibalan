@@ -1,0 +1,163 @@
+```
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ movie.name }} | CineNova
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/style.css'
+        ) }}"
+    >
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="logo"
+    >
+        CINE<span>NOVA</span>
+    </a>
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('booking', movie=movie_id) }}">
+            Booking
+        </a>
+
+    </nav>
+
+    <div class="user-icon">
+        U
+    </div>
+
+</header>
+
+
+
+<section class="details-page">
+
+    <div class="details-poster poster-{{ movie_id }}">
+
+        <div class="details-poster-content">
+
+            <span>
+                {{ movie.genre }}
+            </span>
+
+            <h1>
+                {{ movie.name.upper() }}
+            </h1>
+
+            <p>
+                {{ movie.language }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="details-content">
+
+        <span class="section-label">
+            MOVIE DETAILS
+        </span>
+
+        <h1>
+            {{ movie.name }}
+        </h1>
+
+        <div class="rating">
+            ⭐ {{ movie.rating }}/10
+        </div>
+
+        <p class="description">
+
+            Experience {{ movie.name }} on the
+            big screen with premium sound and
+            immersive cinema experience.
+
+        </p>
+
+
+        <div class="info-grid">
+
+            <div>
+                <small>
+                    GENRE
+                </small>
+
+                <strong>
+                    {{ movie.genre }}
+                </strong>
+            </div>
+
+
+            <div>
+                <small>
+                    LANGUAGE
+                </small>
+
+                <strong>
+                    {{ movie.language }}
+                </strong>
+            </div>
+
+
+            <div>
+                <small>
+                    TICKET PRICE
+                </small>
+
+                <strong>
+                    ₹{{ movie.price }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for(
+                'booking',
+                movie=movie_id
+            ) }}"
+            class="primary-btn"
+        >
+            Select Show →
+        </a>
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>
+
+```
