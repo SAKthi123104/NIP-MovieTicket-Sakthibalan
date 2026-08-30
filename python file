@@ -1,0 +1,135 @@
+```
+
+from flask import Flask, render_template, request, redirect, url_for
+import random
+
+app = Flask(__name__)
+
+movies = {
+    "leo": {
+        "name": "Leo",
+        "genre": "Action • Thriller",
+        "language": "Tamil",
+        "rating": "8.4",
+        "price": 200
+    },
+
+    "retro": {
+        "name": "Retro",
+        "genre": "Drama • Romance",
+        "language": "Tamil",
+        "rating": "8.1",
+        "price": 220
+    },
+
+    "thudarum": {
+        "name": "Thudarum",
+        "genre": "Drama • Family",
+        "language": "Malayalam",
+        "rating": "8.7",
+        "price": 180
+    },
+
+    "dragon": {
+        "name": "Dragon",
+        "genre": "Comedy • Drama",
+        "language": "Tamil",
+        "rating": "8.0",
+        "price": 190
+    }
+}
+
+
+@app.route("/")
+def home():
+    return render_template(
+        "index.html",
+        movies=movies
+    )
+
+
+@app.route("/movie/<movie_id>")
+def movie_details(movie_id):
+
+    movie = movies.get(movie_id)
+
+    if not movie:
+        return "Movie not found", 404
+
+    return render_template(
+        "movie-details.html",
+        movie=movie,
+        movie_id=movie_id
+    )
+
+
+@app.route("/booking", methods=["GET", "POST"])
+def booking():
+
+    if request.method == "POST":
+
+        movie_id = request.form.get("movie_id")
+        show_date = request.form.get("show_date")
+        show_time = request.form.get("show_time")
+        show_type = request.form.get("show_type")
+        tickets = int(request.form.get("tickets", 1))
+
+        movie = movies.get(movie_id)
+
+        if not movie:
+            return "Movie not found", 404
+
+        price = movie["price"]
+
+        if show_type == "Premium":
+            price += 50
+
+        total_cost = price * tickets
+
+        available_seats = 48 - tickets
+
+        ticket_id = (
+            "CN-" +
+            str(random.randint(100000, 999999))
+        )
+
+        seats = []
+
+        for i in range(tickets):
+            seats.append(
+                "A" + str(10 + i)
+            )
+
+        return render_template(
+            "ticket.html",
+            movie=movie,
+            show_date=show_date,
+            show_time=show_time,
+            show_type=show_type,
+            tickets=tickets,
+            price=price,
+            total_cost=total_cost,
+            available_seats=available_seats,
+            ticket_id=ticket_id,
+            seats=", ".join(seats)
+        )
+
+    movie_id = request.args.get("movie", "leo")
+
+    movie = movies.get(movie_id)
+
+    return render_template(
+        "booking.html",
+        movie=movie,
+        movie_id=movie_id
+    )
+
+
+if __name__ == "__main__":
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=5000
+    )
+
+```
