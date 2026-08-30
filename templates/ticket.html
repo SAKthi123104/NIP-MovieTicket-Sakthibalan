@@ -1,0 +1,280 @@
+```
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Ticket | CineNova
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/style.css'
+        ) }}"
+    >
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="logo"
+    >
+        CINE<span>NOVA</span>
+    </a>
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('home') }}">
+            Movies
+        </a>
+
+    </nav>
+
+    <div class="user-icon">
+        U
+    </div>
+
+</header>
+
+
+
+<section class="ticket-page">
+
+
+    <div class="ticket-success">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <span class="section-label">
+            BOOKING COMPLETE
+        </span>
+
+        <h1>
+            Your Ticket Is Ready
+        </h1>
+
+        <p>
+            Your booking has been successfully confirmed.
+        </p>
+
+    </div>
+
+
+
+    <div class="digital-ticket">
+
+
+        <div class="ticket-top">
+
+            <div>
+
+                <div class="ticket-logo">
+                    CINE<span>NOVA</span>
+                </div>
+
+                <h3>
+                    MOVIE TICKET
+                </h3>
+
+            </div>
+
+
+            <div class="ticket-status">
+                ● CONFIRMED
+            </div>
+
+        </div>
+
+
+
+        <div class="ticket-divider"></div>
+
+
+
+        <div class="ticket-main">
+
+
+            <div class="ticket-movie">
+
+                <small>
+                    MOVIE
+                </small>
+
+                <h1>
+                    {{ movie.name }}
+                </h1>
+
+                <p>
+                    {{ movie.genre }}
+                </p>
+
+            </div>
+
+
+
+            <div class="ticket-details">
+
+
+                <div>
+
+                    <small>
+                        DATE
+                    </small>
+
+                    <strong>
+                        {{ show_date }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        SHOW TIME
+                    </small>
+
+                    <strong>
+                        {{ show_time }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        SHOW TYPE
+                    </small>
+
+                    <strong>
+                        {{ show_type }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        TICKETS
+                    </small>
+
+                    <strong>
+                        {{ tickets }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        SEAT NUMBERS
+                    </small>
+
+                    <strong>
+                        {{ seats }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        TOTAL COST
+                    </small>
+
+                    <strong>
+                        ₹{{ total_cost }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="ticket-divider"></div>
+
+
+
+        <div class="ticket-bottom">
+
+            <div>
+
+                <small>
+                    TICKET ID
+                </small>
+
+                <strong>
+                    {{ ticket_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="barcode">
+                || ||| || |||| |||
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="ticket-actions">
+
+        <button
+            class="outline-btn"
+            onclick="window.print()"
+        >
+            🖨 Print Ticket
+        </button>
+
+
+        <a
+            href="{{ url_for('home') }}"
+            class="primary-btn"
+        >
+            Book Another Ticket →
+        </a>
+
+    </div>
+
+
+</section>
+
+
+</body>
+
+</html>
+
+```
