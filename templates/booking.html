@@ -1,0 +1,414 @@
+```<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Booking | CineNova
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/style.css'
+        ) }}"
+    >
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="logo"
+    >
+        CINE<span>NOVA</span>
+    </a>
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="#">
+            Booking
+        </a>
+
+    </nav>
+
+    <div class="user-icon">
+        U
+    </div>
+
+</header>
+
+
+
+<section class="booking-page">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                SMART BOOKING
+            </span>
+
+            <h2>
+                Reserve Your Experience
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="booking-card">
+
+
+        <div class="selected-movie">
+
+            <div>
+
+                <span>
+                    SELECTED MOVIE
+                </span>
+
+                <h2>
+                    {{ movie.name }}
+                </h2>
+
+                <p>
+                    {{ movie.genre }}
+                    •
+                    {{ movie.language }}
+                </p>
+
+            </div>
+
+            <strong>
+                ₹{{ movie.price }}
+            </strong>
+
+        </div>
+
+
+
+        <form
+            action="{{ url_for('booking') }}"
+            method="POST"
+            id="bookingForm"
+        >
+
+
+            <input
+                type="hidden"
+                name="movie_id"
+                value="{{ movie_id }}"
+            >
+
+
+            <div class="form-grid">
+
+
+                <div class="input-group">
+
+                    <label>
+                        Show Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="show_date"
+                        id="showDate"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="input-group">
+
+                    <label>
+                        Show Type
+                    </label>
+
+                    <select
+                        name="show_type"
+                        id="showType"
+                    >
+
+                        <option value="Standard">
+                            Standard
+                        </option>
+
+                        <option value="Premium">
+                            Premium (+₹50)
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <label class="show-label">
+                Select Show Time
+            </label>
+
+
+            <div class="time-grid">
+
+                <button
+                    type="button"
+                    class="time-btn"
+                    data-time="10:00 AM"
+                >
+                    <span>
+                        10:00
+                    </span>
+                    AM
+                </button>
+
+
+                <button
+                    type="button"
+                    class="time-btn"
+                    data-time="01:30 PM"
+                >
+                    <span>
+                        01:30
+                    </span>
+                    PM
+                </button>
+
+
+                <button
+                    type="button"
+                    class="time-btn"
+                    data-time="04:30 PM"
+                >
+                    <span>
+                        04:30
+                    </span>
+                    PM
+                </button>
+
+
+                <button
+                    type="button"
+                    class="time-btn"
+                    data-time="07:30 PM"
+                >
+                    <span>
+                        07:30
+                    </span>
+                    PM
+                </button>
+
+
+                <button
+                    type="button"
+                    class="time-btn"
+                    data-time="10:30 PM"
+                >
+                    <span>
+                        10:30
+                    </span>
+                    PM
+                </button>
+
+            </div>
+
+
+            <input
+                type="hidden"
+                name="show_time"
+                id="showTime"
+                required
+            >
+
+
+
+            <div class="ticket-control">
+
+                <div>
+
+                    <label>
+                        Number of Tickets
+                    </label>
+
+                    <p>
+                        Maximum 10 tickets
+                    </p>
+
+                </div>
+
+
+                <div class="counter">
+
+                    <button
+                        type="button"
+                        onclick="changeTickets(-1)"
+                    >
+                        −
+                    </button>
+
+                    <span id="ticketCount">
+                        1
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="changeTickets(1)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <input
+                type="hidden"
+                name="tickets"
+                id="ticketsInput"
+                value="1"
+            >
+
+
+
+            <div class="availability-box">
+
+                <div class="availability-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Show Available
+                    </strong>
+
+                    <p>
+                        <span id="availableSeats">
+                            48
+                        </span>
+                        seats currently available
+                    </p>
+
+                </div>
+
+                <div class="availability-status">
+                    AVAILABLE
+                </div>
+
+            </div>
+
+
+
+            <div class="cost-card">
+
+                <div class="cost-row">
+
+                    <span>
+                        Ticket Price
+                    </span>
+
+                    <strong id="price">
+                        ₹{{ movie.price }}
+                    </strong>
+
+                </div>
+
+
+                <div class="cost-row">
+
+                    <span>
+                        Tickets
+                    </span>
+
+                    <strong id="summaryTickets">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="cost-row total">
+
+                    <span>
+                        Total Cost
+                    </span>
+
+                    <strong id="totalCost">
+                        ₹{{ movie.price }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="confirm-btn"
+            >
+
+                <span>
+                    Confirm Booking
+                </span>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    const basePrice =
+        {{ movie.price }};
+
+</script>
+
+<script
+    src="{{ url_for(
+        'static',
+        filename='js/script.js'
+    ) }}"
+></script>
+
+
+</body>
+
+</html>
+
+```
